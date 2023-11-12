@@ -53,4 +53,18 @@ public class MessageService {
 
         return returnMessage;
     }
+
+    public Message updateMessage(int id, String message){
+        if(message.length() > 254 || message.equals("")){
+            return null;
+        }
+        Optional<Message> value = repository.findById(id);
+        if(value.isPresent()){
+            Message returnValue = value.get();
+            returnValue.setMessage_text(message);
+            return repository.save(returnValue);
+        }
+        
+        return null;
+    }
 }
